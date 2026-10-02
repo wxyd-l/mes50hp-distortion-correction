@@ -1,0 +1,16 @@
+# Only the project and its entry documents belong in version control.
+/*
+!/.gitignore
+!/.gitattributes
+!/AGENTS.md
+!/README.md
+!/distortion_fpga/
+
+# Local credentials, generated caches and vendor tool licenses.
+.env
+.env.*
+*.pem
+*.key
+*.lic
+__pycache__/
+.venv/

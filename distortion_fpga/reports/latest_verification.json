@@ -1,0 +1,71 @@
+{
+  "verified_at": "2026-10-02T23:51:04+08:00",
+  "scope": "offline functional verification; not PDS timing or hardware validation",
+  "python": "3.12.14",
+  "numpy": "2.3.5",
+  "opencv": "4.10.0",
+  "software_tests_run": 9,
+  "software_passed": true,
+  "hdl_run": true,
+  "generic_synthesis_requested": true,
+  "source_sha256": {
+    "rtl/bilinear_rgb.sv": "0a1d4e17f1238ccd8e520c9229cdf3679bee99515c527d91a0f72c69312d9053",
+    "rtl/distortion_mapper.sv": "50f36d36201ce5884033f72bfb059e705445037ed872df208fae0648069f4eaf",
+    "rtl/pango_read_bridge.sv": "e5fa4fe26b0446a94dd5548da82928f7e183f0f471332a0ebb73397dfd6305ea",
+    "rtl/pixel_read_cache.sv": "4b714aff08cf402bf1f96454af01405d3c48ae9f870ca54ce6dd3411abc09983",
+    "rtl/remap_ddr_read_top.sv": "69cad8217f610be8079acc183ea88be000bffac0796ab6d5f450a022e5a2e1b8",
+    "rtl/remap_frame_core.sv": "7b2a92e4ecf9154da3941baab844a2a751fa0e6236c11cfabd650d4b92b4d606",
+    "scripts/check_synthesis.py": "d8d424417687d26b9afd7f30eabde0524eb34bdfb5ac3c98573e79f44e78dae5",
+    "scripts/generate_regression.py": "6147dd80fdc1530c869d9bd500afee134db093846d5f5b2df734cdcfa698b755",
+    "scripts/prepare_vendor.py": "632782667e5b48b15d8cd0cda6e8563e6b84e8565df63b58628b38364d268ee7",
+    "scripts/run_hdl.py": "872aae40246e2587461f9c522e640bf9f2bf1bb6af4fda762adde29ffeccd1fb",
+    "scripts/verify.py": "73fe0703a52c6a36fcf50ac2ef563d142404fbbdd7db68d208828358bb99eec4",
+    "sim/tb_frame.sv": "0759b76d5b596d68f97737284c1e0853339b9f11426565842693069802f9d8de",
+    "sim/tb_math.sv": "0f18f133d6996a025dda023f98890081ed0de5a3d14c3a6883b5864a699cdb84",
+    "sim/tb_pango_read_bridge.sv": "7697a2fc9a9b2d5f93ba870aa06f0a04d000bf08f61f9f2e4c3449394517eeeb",
+    "sim/tb_pixel_read_cache.sv": "d344c5a71b39457065fb0139c37063147e3142c94d07542422d817789e23b67c",
+    "sim/tb_vectors.sv": "b00c9169afae27a8fa42b486e1da92e9ff9fe808992bd7e708fdf7c90724600a",
+    "software/__init__.py": "d6e8c9b9d0da49e3091c382321a122f055996420a8de1875bae0a148b20bd132",
+    "software/cache_budget.py": "8a5ce81cbd10b339e89442f8c46b5e27810917f59f7ff27efbff225f55ca2857",
+    "software/calibrate.py": "905d6916f02fb20b381e54c68bc10d33563688003cd148a7f81c4351d70fcf13",
+    "software/cli.py": "8e6280f60308c61f0684078246d51e2332b111d608ed1fbaafcf4f8574edd872",
+    "software/reference.py": "755878d2856ffa205406f9294264e3f47003e9b164e0311c1a1f39c8cb337bff",
+    "software/roundtrip.py": "204d52ba6a77d87ecbd3072cb035fb07868d9a5b25f78cdbfe23e9c9caea68c3",
+    "tests/test_reference.py": "40bcf99df7b99e4bfb9313ebccbbbb88105762e12ed1b86b59f271aecacbf10d"
+  },
+  "hdl": {
+    "kind": "RTL functional simulation; not board timing",
+    "tests": [
+      {
+        "test": "tb_math",
+        "passed": true,
+        "seconds": 9.672
+      },
+      {
+        "test": "tb_vectors",
+        "passed": true,
+        "seconds": 1.031
+      },
+      {
+        "test": "tb_frame",
+        "passed": true,
+        "seconds": 6.406
+      },
+      {
+        "test": "tb_pixel_read_cache",
+        "passed": true,
+        "seconds": 0.453
+      },
+      {
+        "test": "tb_pango_read_bridge",
+        "passed": true,
+        "seconds": 0.485
+      },
+      {
+        "test": "tb_frame_cached",
+        "passed": true,
+        "seconds": 4.219
+      }
+    ]
+  }
+}

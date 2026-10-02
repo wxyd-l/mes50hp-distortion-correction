@@ -1,0 +1,9 @@
+build/
+vendor/
+tools/
+__pycache__/
+*.pyc
+*.vcd
+*.fst
+*.vvp
+.venv/

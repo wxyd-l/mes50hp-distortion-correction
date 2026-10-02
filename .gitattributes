@@ -1,0 +1,4 @@
+# Preserve exact verified source bytes across platforms. The verification
+# report records byte-level SHA256 values, including original line endings.
+* -text
+*.png binary
