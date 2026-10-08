@@ -1,0 +1,12 @@
+.runtime/
+__pycache__/
+algorithm/out/
+rtl/out/
+rtl/work/
+transcript
+vsim.wlf
+*.pyc
+
+# Keep our Python source tools despite the parent project's tools/ ignore rule.
+!/rtl/tools/
+!/rtl/tools/*.py

@@ -1,0 +1,7 @@
+{
+  "model": "brown_conrady_5",
+  "image_size": [1280, 720],
+  "camera_matrix": [[900.0, 0.0, 639.5], [0.0, 910.0, 359.5], [0.0, 0.0, 1.0]],
+  "dist_coeffs": [-0.20, 0.04, 0.001, -0.001, 0.0],
+  "note": "Synthetic demonstration only. NOT a calibration of the team's OV5640."
+}

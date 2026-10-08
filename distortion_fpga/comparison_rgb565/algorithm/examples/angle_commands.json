@@ -1,0 +1,6 @@
+[
+  {"frame": 0, "view": {"angle": 0, "border": "crop-resize"}},
+  {"frame": 30, "view": {"angle": 20, "border": "crop-resize"}},
+  {"frame": 60, "view": {"roll": 8, "pitch": 5, "yaw": -7, "border": "crop-resize"}},
+  {"frame": 90, "view": {"angle": -15, "border": "crop-resize"}}
+]
