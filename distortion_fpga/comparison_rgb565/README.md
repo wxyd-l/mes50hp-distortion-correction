@@ -2,7 +2,7 @@
 
 本工作目录只开发算法与独立 RTL；桌面的厂商资料和交付归档保持不变。
 
-本目录是 Leo 的算法与 RGB565 对照方案，位于本地分支 `codex/rgb565-mapper-comparison` 的 `distortion_fpga/comparison_rgb565/`。队友的原始实现仍在 `distortion_fpga/rtl/` 等目录，主分支不变。测试命令从本目录运行；生成物、运行环境和交付压缩包不进入版本管理。该分支尚未上传 GitHub。
+本目录是 Leo 的算法与 RGB565 对照方案，位于独立分支 `codex/rgb565-mapper-comparison` 的 `distortion_fpga/comparison_rgb565/`。队友的原始实现仍在 `distortion_fpga/rtl/` 等目录，主分支不变。测试命令从本目录运行；生成物、运行环境和交付压缩包不进入版本管理。
 
 - `algorithm/`：真实帧标定、镜头矫正、角度/仿射合成、裁剪、增强、LUT 精度扫描和质量估算。
 - `rtl/`：规范化 RGB565 插值、串行/并行坐标查表、双表帧边界切换、源帧取样、整帧写出、独立 Gamma 以及可执行仿真。
