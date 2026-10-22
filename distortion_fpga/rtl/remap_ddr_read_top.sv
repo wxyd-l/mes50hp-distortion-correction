@@ -5,11 +5,14 @@
 module remap_ddr_read_top #(
     parameter integer WIDTH=64,
     parameter integer HEIGHT=48,
-    parameter integer CACHE_LINES=512
+    parameter integer CACHE_LINES=512,
+    parameter integer PROJECTIVE=0,
+    parameter integer POSITIVE_DEPTH=0
 )(
     input wire clk, input wire rst_n,
     input wire start, output wire start_ready,
     input wire signed [31:0] a00,a01,a02,a10,a11,a12,
+    input wire signed [31:0] a20,a21,a22,
     input wire signed [31:0] k1,k2,p1,p2,fx,fy,cx,cy,
     output wire busy,done,frame_overflow,
     output reg memory_error,
@@ -36,9 +39,10 @@ module remap_ddr_read_top #(
     wire [2:0] line_rsp_error;
     wire bridge_protocol_error;
 
-    remap_frame_core #(.WIDTH(WIDTH),.HEIGHT(HEIGHT)) core (
+    remap_frame_core #(.WIDTH(WIDTH),.HEIGHT(HEIGHT),.PROJECTIVE(PROJECTIVE),.POSITIVE_DEPTH(POSITIVE_DEPTH)) core (
         .clk(clk),.rst_n(rst_n),.start(accepted_start),
         .a00(a00),.a01(a01),.a02(a02),.a10(a10),.a11(a11),.a12(a12),
+        .a20(a20),.a21(a21),.a22(a22),
         .k1(k1),.k2(k2),.p1(p1),.p2(p2),.fx(fx),.fy(fy),.cx(cx),.cy(cy),
         .busy(busy),.done(done),.frame_overflow(frame_overflow),
         .frame_cycles(frame_cycles),.pixels_emitted(pixels_emitted),

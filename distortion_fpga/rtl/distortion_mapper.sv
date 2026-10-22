@@ -17,7 +17,9 @@
 // out_overflow=1 its source coordinate is invalid and src_x/src_y are zero.
 // A consumer must retire such a token (for example as a black output pixel).
 // No camera interface, frame buffer, or device-specific multiplier is implied.
-module distortion_mapper (
+module distortion_mapper #(
+    parameter integer NORMALIZED_INPUT = 0
+)(
     input  wire                 clk,
     input  wire                 rst_n,
     input  wire                 ce,
@@ -43,7 +45,11 @@ module distortion_mapper (
     output wire [15:0]          out_u,
     output wire [15:0]          out_v,
     output wire signed [31:0]   src_x,
-    output wire signed [31:0]   src_y
+    output wire signed [31:0]   src_y,
+    // NORMALIZED_INPUT=1 accepts the actual homogeneous quotient in Q8.24.
+    // Legacy instances may leave these disconnected when the parameter is 0.
+    input wire signed [31:0] norm_x, norm_y,
+    input wire norm_overflow
 );
     localparam integer LATENCY = 12;
     localparam signed [63:0] ONE_Q24 = 64'sd16777216;
@@ -71,6 +77,8 @@ module distortion_mapper (
 
     // 0: four exact signed 32x17 inverse-affine products.
     logic signed [48:0] s0_xu, s0_xv, s0_yu, s0_yv;
+    logic signed [31:0] s0_norm_x, s0_norm_y;
+    logic s0_norm_overflow;
     // 1: sum in 64 bits; convert Q4.28 to Q8.24.
     logic signed [31:0] s1_x, s1_y;
     // 2: full-precision square/cross products.
@@ -101,8 +109,8 @@ module distortion_mapper (
 
     wire signed [63:0] affine_x_q28 = ext49(s0_xu) + ext49(s0_xv) + ext32(a02);
     wire signed [63:0] affine_y_q28 = ext49(s0_yu) + ext49(s0_yv) + ext32(a12);
-    wire signed [63:0] affine_x_q24 = affine_x_q28 >>> 4;
-    wire signed [63:0] affine_y_q24 = affine_y_q28 >>> 4;
+    wire signed [63:0] affine_x_q24 = NORMALIZED_INPUT ? ext32(s0_norm_x) : affine_x_q28 >>> 4;
+    wire signed [63:0] affine_y_q24 = NORMALIZED_INPUT ? ext32(s0_norm_y) : affine_y_q28 >>> 4;
     wire signed [63:0] r2_wide = ext32(q24(s2_xx)) + ext32(q24(s2_yy));
     wire signed [63:0] twice_xx = ext32(s3_xx) <<< 1;
     wire signed [63:0] twice_yy = ext32(s3_yy) <<< 1;
@@ -131,7 +139,8 @@ module distortion_mapper (
         end else if (ce) begin
             valid_pipe <= {valid_pipe[LATENCY-2:0], in_valid};
             overflow_pipe[0] <= 1'b0;
-            overflow_pipe[1] <= overflow32(affine_x_q24) || overflow32(affine_y_q24);
+            overflow_pipe[1] <= overflow32(affine_x_q24) || overflow32(affine_y_q24) ||
+                                (NORMALIZED_INPUT && s0_norm_overflow);
             overflow_pipe[2] <= overflow_pipe[1];
             overflow_pipe[3] <= overflow_pipe[2] || overflow_q24(s2_xx) ||
                                 overflow_q24(s2_yy) || overflow_q24(s2_xy) || overflow32(r2_wide);
@@ -166,6 +175,9 @@ module distortion_mapper (
             s0_xv <= a01 * $signed({1'b0, in_v});
             s0_yu <= a10 * $signed({1'b0, in_u});
             s0_yv <= a11 * $signed({1'b0, in_v});
+            s0_norm_x <= norm_x;
+            s0_norm_y <= norm_y;
+            s0_norm_overflow <= norm_overflow;
 
             s1_x <= affine_x_q24[31:0];
             s1_y <= affine_y_q24[31:0];

@@ -55,17 +55,28 @@ def run(top, bench, rtl_files, defines=()):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--only', choices=['math', 'frame', 'vectors', 'cache', 'bridge', 'cached-frame'])
+    parser.add_argument('--only', choices=['math', 'frame', 'vectors', 'cache', 'bridge', 'cached-frame',
+                                           'gamma', 'projective', 'projective-frame', 'projective-cached-frame', 'pipeline'])
     args = parser.parse_args()
     (ROOT / 'build').mkdir(exist_ok=True)
-    common = ['rtl/distortion_mapper.sv', 'rtl/bilinear_rgb.sv']
+    common = ['rtl/distortion_mapper.sv', 'rtl/bilinear_rgb.sv',
+              'rtl/homography_normalizer.sv', 'rtl/projective_distortion_mapper.sv']
+    integrated = common + ['rtl/remap_frame_core.sv', 'rtl/pixel_read_cache.sv',
+                            'rtl/pango_read_bridge.sv', 'rtl/remap_ddr_read_top.sv']
     jobs = [('math', 'tb_math', 'sim/tb_math.sv', common, ()),
             ('vectors', 'tb_vectors', 'sim/tb_vectors.sv', common, ()),
             ('frame', 'tb_frame', 'sim/tb_frame.sv', common + ['rtl/remap_frame_core.sv'], ()),
             ('cache', 'tb_pixel_read_cache', 'sim/tb_pixel_read_cache.sv', ['rtl/pixel_read_cache.sv'], ()),
             ('bridge', 'tb_pango_read_bridge', 'sim/tb_pango_read_bridge.sv', ['rtl/pango_read_bridge.sv'], ()),
-            ('cached-frame', 'tb_frame_cached', 'sim/tb_frame.sv', common +
-             ['rtl/remap_frame_core.sv', 'rtl/pixel_read_cache.sv', 'rtl/pango_read_bridge.sv', 'rtl/remap_ddr_read_top.sv'], ('DDR_CACHE',))]
+            ('cached-frame', 'tb_frame_cached', 'sim/tb_frame.sv', integrated, ('DDR_CACHE',)),
+            ('gamma', 'tb_gamma', 'sim/tb_gamma.sv', ['rtl/gamma_stream.sv'], ()),
+            ('projective', 'tb_projective', 'sim/tb_projective.sv', common, ()),
+            ('projective-frame', 'tb_frame_projective', 'sim/tb_frame.sv',
+             common + ['rtl/remap_frame_core.sv'], ('PROJECTIVE',)),
+            ('projective-cached-frame', 'tb_frame_projective_cached', 'sim/tb_frame.sv',
+             integrated, ('PROJECTIVE', 'DDR_CACHE')),
+            ('pipeline', 'tb_algorithm_pipeline', 'sim/tb_algorithm_pipeline.sv',
+             integrated + ['rtl/gamma_stream.sv'], ())]
     report = []
     for label, top, bench, sources, defines in jobs:
         if args.only and args.only != label:

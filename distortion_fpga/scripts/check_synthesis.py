@@ -26,9 +26,13 @@ BASE_SOURCES = [
     "rtl/pixel_read_cache.sv",
     "rtl/pango_read_bridge.sv",
     "rtl/remap_ddr_read_top.sv",
+    "rtl/homography_normalizer.sv",
+    "rtl/projective_distortion_mapper.sv",
+    "rtl/gamma_stream.sv",
 ]
 DEFAULT_TOPS = ["distortion_mapper", "bilinear_rgb", "remap_frame_core",
-                "pixel_read_cache", "pango_read_bridge", "remap_ddr_read_top"]
+                "pixel_read_cache", "pango_read_bridge", "remap_ddr_read_top",
+                "homography_normalizer", "projective_distortion_mapper", "gamma_stream"]
 
 
 def wsl_path(path: Path) -> str:
@@ -130,16 +134,19 @@ def summarize_netlist(netlist, top):
     }
 
 
-def check_top(top, sources, prefix, path_for_tool, environment):
+def check_top(top, sources, prefix, path_for_tool, environment, parameters=None, label=None):
     build = ROOT / "build"
-    script_path = build / f"synthesis_{top}.ys"
-    json_path = build / f"synthesis_{top}.json"
-    log_path = build / f"synthesis_{top}.log"
+    label = label or top
+    script_path = build / f"synthesis_{label}.ys"
+    json_path = build / f"synthesis_{label}.json"
+    log_path = build / f"synthesis_{label}.log"
     quoted_sources = " ".join('"' + path_for_tool(source) + '"' for source in sources)
     # Word-level reduction only. Multiplication stays a generic $mul; no
     # techmap, synth_*, memory mapping, ABC, or place-and-route is requested.
     commands = [
         "read_verilog -sv " + quoted_sources,
+        *(["chparam " + " ".join(f"-set {key} {value}" for key,value in parameters.items()) + " " + top]
+          if parameters else []),
         "hierarchy -check -top " + top,
         "proc",
         "opt",
@@ -168,6 +175,8 @@ def check_top(top, sources, prefix, path_for_tool, environment):
     warnings = [line for line in log.splitlines() if line.startswith("Warning:")]
     return {
         "top": top,
+        "configuration": label,
+        "parameters": parameters or {},
         "passed": True,
         "check_problems": int(findings[-1]),
         **stats,
@@ -221,6 +230,14 @@ def main():
         print(f"PASS {top}: check=0 latch_bits=0 mul={stats['multiplication_cells']} "
               f"FF_bits={stats['flip_flop_bits']} memory_bits={stats['memory_bits']} "
               f"generic_cells={stats['generic_cells']}", flush=True)
+    if not args.top:
+        stats = check_top("remap_ddr_read_top", sources, prefix, path_for_tool, environment,
+                          parameters={"PROJECTIVE": 1, "POSITIVE_DEPTH": 1},
+                          label="remap_ddr_read_top_projective")
+        report["modules"].append(stats)
+        print(f"PASS remap_ddr_read_top_projective: check=0 latch_bits=0 "
+              f"mul={stats['multiplication_cells']} FF_bits={stats['flip_flop_bits']} "
+              f"memory_bits={stats['memory_bits']} generic_cells={stats['generic_cells']}", flush=True)
     suffix = "_" + "_".join(tops) if args.top else ""
     report_path = ROOT / "build" / f"synthesis_results{suffix}.json"
     report_path.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")

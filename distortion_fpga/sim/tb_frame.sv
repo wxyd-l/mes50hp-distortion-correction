@@ -1,14 +1,27 @@
 `timescale 1ns/1ps
 `ifdef DDR_CACHE
+`ifdef PROJECTIVE
+module tb_frame_projective_cached;
+`else
 module tb_frame_cached;
+`endif
+`else
+`ifdef PROJECTIVE
+module tb_frame_projective;
 `else
 module tb_frame;
 `endif
+`endif
     localparam W=64,H=48,N=W*H,CASES=5;
+`ifdef PROJECTIVE
+    localparam PROJECTIVE_MODE=1, PARAMS=17;
+`else
+    localparam PROJECTIVE_MODE=0, PARAMS=14;
+`endif
     reg clk=0; always #5 clk=~clk;
     reg rst_n=0,start=0;
-    reg [31:0] cfg[0:13];
-    reg [31:0] parameters_mem[0:CASES*14-1];
+    reg [31:0] cfg[0:16];
+    reg [31:0] parameters_mem[0:CASES*PARAMS-1];
     reg [23:0] source[0:N-1];
     reg [23:0] expected[0:CASES*N-1];
     wire busy,done,frame_overflow,out_valid,out_last;
@@ -34,9 +47,10 @@ module tb_frame;
     integer lane;
     assign req_addr={2'd0,araddr,2'd0};
     assign rsp_ready=1'b1; // The real Pango interface has no response ready.
-    remap_ddr_read_top #(.WIDTH(W),.HEIGHT(H),.CACHE_LINES(64)) dut (
+    remap_ddr_read_top #(.WIDTH(W),.HEIGHT(H),.CACHE_LINES(64),.PROJECTIVE(PROJECTIVE_MODE)) dut (
         .clk(clk),.rst_n(rst_n),.start(start),.start_ready(start_ready),
         .a00(cfg[0]),.a01(cfg[1]),.a02(cfg[2]),.a10(cfg[3]),.a11(cfg[4]),.a12(cfg[5]),
+        .a20(cfg[14]),.a21(cfg[15]),.a22(cfg[16]),
         .k1(cfg[6]),.k2(cfg[7]),.p1(cfg[8]),.p2(cfg[9]),.fx(cfg[10]),.fy(cfg[11]),.cx(cfg[12]),.cy(cfg[13]),
         .busy(busy),.done(done),.frame_overflow(frame_overflow),.memory_error(memory_error),
         .frame_cycles(frame_cycles),.pixels_emitted(pixels_emitted),.cache_hits(cache_hits),.cache_misses(cache_misses),
@@ -44,9 +58,10 @@ module tb_frame;
         .axi_araddr(araddr),.axi_arlen(arlen),.axi_arid(arid),.axi_arvalid(req_valid),.axi_arready(req_ready),
         .axi_rdata(line_rsp_data),.axi_rid(4'd0),.axi_rvalid(rsp_valid),.axi_rlast(1'b1));
 `else
-    remap_frame_core #(.WIDTH(W),.HEIGHT(H)) dut(
+    remap_frame_core #(.WIDTH(W),.HEIGHT(H),.PROJECTIVE(PROJECTIVE_MODE)) dut(
         .clk(clk),.rst_n(rst_n),.start(start),
         .a00(cfg[0]),.a01(cfg[1]),.a02(cfg[2]),.a10(cfg[3]),.a11(cfg[4]),.a12(cfg[5]),
+        .a20(cfg[14]),.a21(cfg[15]),.a22(cfg[16]),
         .k1(cfg[6]),.k2(cfg[7]),.p1(cfg[8]),.p2(cfg[9]),.fx(cfg[10]),.fy(cfg[11]),.cx(cfg[12]),.cy(cfg[13]),
         .busy(busy),.done(done),.frame_overflow(frame_overflow),.frame_cycles(frame_cycles),.pixels_emitted(pixels_emitted),
         .mem_req_valid(req_valid),.mem_req_ready(req_ready),.mem_req_addr(req_addr),
@@ -102,15 +117,21 @@ module tb_frame;
         out_ready=(rng[6:3]>4);
     end
     initial begin
+`ifdef PROJECTIVE
+        $readmemh("build/projective/parameters.mem",parameters_mem);
+        $readmemh("build/projective/input_rgb.mem",source);
+        $readmemh("build/projective/expected_rgb.mem",expected);
+`else
         $readmemh("build/regression/parameters.mem",parameters_mem);
         $readmemh("build/regression/input_rgb.mem",source);
         $readmemh("build/regression/expected_rgb.mem",expected);
-        for(i=0;i<14;i=i+1) cfg[i]=0;
+`endif
+        for(i=0;i<17;i=i+1) cfg[i]=0;
         repeat(5) @(negedge clk);
         rst_n=1;
         // Abort an in-flight read. Both endpoints reset: stale untagged replies
         // must be flushed by the adapter, as required by the interface contract.
-        for(i=0;i<14;i=i+1) cfg[i]=parameters_mem[i];
+        for(i=0;i<PARAMS;i=i+1) cfg[i]=parameters_mem[i];
         start=1; @(negedge clk); start=0;
         while (!pending) @(negedge clk);
         rst_n=0;
@@ -118,7 +139,7 @@ module tb_frame;
         if(busy || rsp_valid || pending) $fatal(1,"Reset did not flush both endpoints");
         rst_n=1;
         for (test_case=0;test_case<CASES;test_case=test_case+1) begin
-            for(i=0;i<14;i=i+1) cfg[i]=parameters_mem[test_case*14+i];
+            for(i=0;i<PARAMS;i=i+1) cfg[i]=parameters_mem[test_case*PARAMS+i];
             received=0; requests=0; total_cycles=0;
             start=1; @(negedge clk); start=0;
             while (!done) begin
@@ -126,7 +147,7 @@ module tb_frame;
                 total_cycles=total_cycles+1;
                 // External writes and spurious start while busy must not change this frame.
                 if(total_cycles==30) begin
-                    for(i=0;i<14;i=i+1) cfg[i]=32'h5a5a5a5a;
+                    for(i=0;i<PARAMS;i=i+1) cfg[i]=32'h5a5a5a5a;
                     start=1;
                 end
                 if(total_cycles==31) start=0;

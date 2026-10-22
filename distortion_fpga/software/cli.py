@@ -32,6 +32,10 @@ def export(config, destination, image=None):
                 "formats":{"a":"Q4.28","k1_k2_p1_p2":"Q8.24","fx_fy_cx_cy":"Q16.16","source":"Q16.16"},
                 "parameter_order":names,"parameters":params,"validated_pixels":int(qx.size),
                 "border":"each out-of-range neighbor is zero", "bilinear":"high 8 fractional bits; sum of four weighted RGB888 taps; (sum+32768)>>16"}
+    if len(params) == 17:
+        manifest["formats"]["a"] = "Q4.28 3x3 homogeneous matrix; first six entries then a20,a21,a22 after intrinsics"
+        manifest["homogeneous_division"] = "Q8.24 numerator/denominator; signed quotient truncates toward zero"
+        manifest["positive_depth"] = bool(config.get("projective_positive_depth", False))
     write_json(dst/"fixed_parameters.json",manifest)
     (dst/"parameters.mem").write_text("".join(f"{params[n]&0xffffffff:08x}\n" for n in names),encoding="ascii")
     (dst/"parameters.vh").write_text("// Generated coefficients. See fixed_parameters.json for provenance.\n"+
@@ -70,8 +74,36 @@ def main(argv=None):
     p.add_argument("--output",default="build/synthetic_roundtrip")
     p.add_argument("--width",type=int,default=512)
     p.add_argument("--height",type=int,default=384)
+    from .pipeline import add_arguments
+    p = sub.add_parser("process", help="process an image sequence: raw-frame Gamma, then geometry and bilinear")
+    add_arguments(p)
+    p = sub.add_parser("algorithm-demo", help="synthetic dark/bright sequence through Gamma and lens/pose correction")
+    p.add_argument("--output", default="build/algorithm_demo")
+    p.add_argument("--width", type=int, default=384)
+    p.add_argument("--height", type=int, default=288)
+    p = sub.add_parser("pose", help="build an output-to-source camera rotation and validate its fixed-point map")
+    p.add_argument("--config", required=True)
+    p.add_argument("--yaw", type=float, default=0.0)
+    p.add_argument("--pitch", type=float, default=0.0)
+    p.add_argument("--roll", type=float, default=0.0)
+    p.add_argument("--output", required=True)
     args = parser.parse_args(argv)
-    if args.command == "roundtrip":
+    if args.command == "process":
+        from .pipeline import run
+        report = run(args)
+        print(json.dumps({"frames":len(report["frames"]),"output":args.output},indent=2))
+    elif args.command == "algorithm-demo":
+        from .pipeline import demo
+        report = demo(args.output, args.width, args.height)
+        print(json.dumps({"provenance":report["provenance"],"frames":report["frames"]},indent=2))
+    elif args.command == "pose":
+        from .geometry import pose_config
+        config = pose_config(load_config(args.config),yaw_degrees=args.yaw,
+                             pitch_degrees=args.pitch,roll_degrees=args.roll)
+        qx,qy = fixed_map(config)
+        write_json(args.output,config)
+        print(json.dumps({"validated_pixels":int(qx.size),"output":args.output}))
+    elif args.command == "roundtrip":
         from .roundtrip import generate_roundtrip
         config,report,_ = generate_roundtrip(args.output,args.width,args.height)
         write_json(Path(args.output)/"SYNTHETIC_TEST_ONLY.json",config)

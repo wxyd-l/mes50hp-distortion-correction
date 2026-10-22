@@ -2,7 +2,7 @@
 
 实现位于 [distortion_fpga/README.md](distortion_fpga/README.md)，对应本目录选题指南PDF的第二题，目标为盘古50K MES50HP。
 
-目前用户没有硬件；已开始完成算法、RTL、仿真和板级接入准备。原始题目PDF及开发板资料保持不变。具体测试结果和仍需上板完成的部分见项目说明。
+算法包含镜头畸变、双线性插值、三维姿态／透视映射、自适应Gamma，以及标定、直线度和SFR/MTF50工具。软件模型与RTL逐像素对拍由统一命令复现；实时吞吐优化和板级接入见项目说明。
 
 ## 队友开始使用
 
@@ -19,6 +19,7 @@ python -m venv .venv
 ```sh
 python -m pip install -r software/requirements.txt
 python scripts/verify.py --software-only
+python -m software.cli algorithm-demo
 ```
 
 完整RTL验证还需要Icarus Verilog；安装好`iverilog`和`vvp`后执行`python scripts/verify.py`。可选的通用综合结构检查使用Yosys，详见[工具说明](distortion_fpga/docs/tool_setup.md)和[综合检查](distortion_fpga/docs/synthesis_check.md)。文档里的`C:/Users/Lenovo/...`和`E:/code/fpga/...`是原开发机路径，新电脑使用自己的Python和克隆路径。

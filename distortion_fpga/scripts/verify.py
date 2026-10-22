@@ -29,14 +29,18 @@ def main():
     if not result.wasSuccessful():
         raise SystemExit(1)
     command('scripts/generate_regression.py')
+    command('scripts/generate_gamma.py')
+    command('scripts/generate_projective_vectors.py')
+    command('scripts/generate_pipeline_vectors.py')
     command('-m','software.cli','demo','--output','build/synthetic_demo')
     command('-m','software.cli','roundtrip','--output','build/synthetic_roundtrip')
+    command('-m','software.cli','algorithm-demo','--output','build/algorithm_demo')
     if not args.software_only:
         command('scripts/run_hdl.py')
     if args.synthesis:
         command('scripts/check_synthesis.py')
     files = sorted(p for folder in ('rtl','software','scripts','sim','tests')
-                   for p in (ROOT/folder).rglob('*') if p.suffix in ('.sv','.py'))
+                   for p in (ROOT/folder).rglob('*') if p.suffix in ('.sv','.py','.hex','.vh','.f'))
     hashes = {p.relative_to(ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
     report = {
         'verified_at': datetime.now(timezone(timedelta(hours=8))).isoformat(timespec='seconds'),
@@ -48,6 +52,10 @@ def main():
     }
     if not args.software_only:
         report['hdl'] = json.loads((ROOT/'build/hdl_results.json').read_text(encoding='utf-8'))
+    if args.synthesis:
+        report['generic_synthesis'] = json.loads((ROOT/'build/synthesis_results.json').read_text(encoding='utf-8'))
+    report['projective_numeric'] = json.loads((ROOT/'build/projective/cases.json').read_text(encoding='utf-8'))['fixed_max_error_pixels']
+    report['adaptive_sequence'] = json.loads((ROOT/'build/pipeline/manifest.json').read_text(encoding='utf-8'))['frames']
     output = ROOT/'reports/latest_verification.json'
     output.parent.mkdir(exist_ok=True)
     output.write_text(json.dumps(report, indent=2, ensure_ascii=False)+'\n', encoding='utf-8')

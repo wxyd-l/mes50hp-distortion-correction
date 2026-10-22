@@ -1,6 +1,6 @@
 # 通用 RTL 综合结构检查
 
-2026-10-02 实际运行结果：六个模块均通过 Yosys `check -assert`，检查范围内未发现组合环、多驱动、使用但未驱动的信号，网表中锁存器位数为 0。工具为 Ubuntu 22.04 官方包提供的 **Yosys 0.9，git sha1 1979e0b**。
+2026-10-22 实际运行结果：九个模块及齐次读顶层的参数化配置，共十项均通过 Yosys `check -assert`，检查范围内未发现组合环、多驱动、使用但未驱动的信号，网表中锁存器位数为 0。工具为 Ubuntu 22.04 官方包提供的 **Yosys 0.9，git sha1 1979e0b**。
 
 此记录验证 SystemVerilog 能转换为通用寄存器、组合运算及存储结构。尚未进行 Pango 器件映射、PDS 综合与布局布线、时序分析或板级验证。
 
@@ -18,7 +18,7 @@ python scripts/check_synthesis.py
 & 'C:\Users\Lenovo\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' scripts/check_synthesis.py
 ```
 
-脚本默认检查全部六个 top。它优先使用 PATH 中的 Yosys，否则使用工程内 `tools/yosys-wsl` 的私有工具；Windows 默认 WSL 发行版为 `Ubuntu-22.04`，可通过 `FPGA_WSL_DISTRO` 指定。单独检查或补充依赖的例子：
+脚本默认检查九个top，再对`remap_ddr_read_top`设置`PROJECTIVE=1,POSITIVE_DEPTH=1`检查齐次分支。它优先使用 PATH 中的 Yosys，否则使用工程内 `tools/yosys-wsl` 的私有工具；Windows 默认 WSL 发行版为 `Ubuntu-22.04`，可通过 `FPGA_WSL_DISTRO` 指定。单独检查或补充依赖的例子：
 
 ```powershell
 python scripts/check_synthesis.py --top pixel_read_cache
@@ -35,7 +35,7 @@ python scripts/check_synthesis.py --top remap_ddr_read_top
 本次的通用变换顺序为：
 
 ```text
-read_verilog -sv <六个 RTL 源文件>
+read_verilog -sv <rtl 源文件>
 hierarchy -check -top <top>
 proc
 opt
@@ -57,16 +57,22 @@ write_json <输出路径>
 
 | Top | 通用 `$mul` | 通用 FF 位数 | 未映射存储位数 | 通用单元数 | CHECK 问题 | 锁存器位数 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| `distortion_mapper` | 18 | 2,716 | 0 | 289 | 0 | 0 |
+| `distortion_mapper` | 18 | 2,717 | 0 | 293 | 0 | 0 |
 | `bilinear_rgb` | 16 | 491 | 0 | 78 | 0 | 0 |
-| `remap_frame_core` | 34 | 3,912 | 96 | 585 | 0 | 0 |
+| `remap_frame_core` | 34 | 3,913 | 96 | 589 | 0 | 0 |
 | `pixel_read_cache` | 0 | 677 | 140,288 | 3,691 | 0 | 0 |
 | `pango_read_bridge` | 0 | 290 | 0 | 48 | 0 | 0 |
-| `remap_ddr_read_top` | 34 | 4,880 | 140,384 | 4,334 | 0 | 0 |
+| `remap_ddr_read_top`（仿射） | 34 | 4,881 | 140,384 | 4,338 | 0 | 0 |
+| `homography_normalizer` | 6 | 723 | 0 | 168 | 0 | 0 |
+| `projective_distortion_mapper` | 20 | 3,308 | 0 | 445 | 0 | 0 |
+| `gamma_stream` | 0 | 186 | 14,336 | 145 | 0 | 0 |
+| `remap_ddr_read_top`（齐次＋正深度） | 36 | 5,568 | 140,384 | 4,499 | 0 | 0 |
 
 FF 位数是通用网表中触发器 `Q` 端口的位数。RAM 端口寄存器已被 `memory_dff` 合并，存储位数单列；这些数字不是 PGL50H 最终 FF、LUT、DRM 或 APM 占用。
 
 映射核的 18 个乘法为 **4 个有符号 32×17→49 位**、**14 个有符号 32×32→64 位**。插值核的 16 个乘法为 **12 个无符号 8×17→25 位**，以及四个权重乘法：8×8、8×9、9×8、9×9。`wreduce` 删除了权重输入中的恒零高位。一个 32×32 运算可能使用多个硬件乘法器，因此 `$mul` 数不能直接作为 APM 数。
+
+齐次归一化有六个矩阵乘法，恢复除法使用移位、比较与减法，无通用`$div`。其Brown–Conrady实例移除四个旧仿射乘法，因此完整映射核20个通用乘法。Gamma的亮度权重、阈值和滞回比较用显式移位加法，没有额外乘法器。Gamma ROM的三个组合读口可能在PDS中复制或映射逻辑，通用位数不表示实际DRM数量。
 
 缓存实际保留了两个通用存储块：
 

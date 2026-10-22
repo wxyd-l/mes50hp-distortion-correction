@@ -1,36 +1,55 @@
 {
-  "verified_at": "2026-10-02T23:51:04+08:00",
+  "verified_at": "2026-10-22T22:50:32+08:00",
   "scope": "offline functional verification; not PDS timing or hardware validation",
   "python": "3.12.14",
   "numpy": "2.3.5",
   "opencv": "4.10.0",
-  "software_tests_run": 9,
+  "software_tests_run": 34,
   "software_passed": true,
   "hdl_run": true,
   "generic_synthesis_requested": true,
   "source_sha256": {
     "rtl/bilinear_rgb.sv": "0a1d4e17f1238ccd8e520c9229cdf3679bee99515c527d91a0f72c69312d9053",
-    "rtl/distortion_mapper.sv": "50f36d36201ce5884033f72bfb059e705445037ed872df208fae0648069f4eaf",
+    "rtl/distortion_mapper.sv": "74ab900074bc9abfcc3db499215e44ebfcbfac15f542a65416b4850f2762e424",
+    "rtl/files.f": "bfc21a7f4247531f3048ee4c7b135c294ac6b1d9da9041a92458c7d37b31d302",
+    "rtl/gamma_lut.hex": "aa8ba4c3c20409046cdb4347620ddb9147707e304b3aee74df7be22d2215dca7",
+    "rtl/gamma_stream.sv": "4d3d0aaab960b1c856caf52d709f0881bb7cdf5afeec7fffba33891a89876fc8",
+    "rtl/homography_normalizer.sv": "70aaad160fdb53d7d4fb39cc88411030f592b474209bcd3e5590b244d4d424b9",
     "rtl/pango_read_bridge.sv": "e5fa4fe26b0446a94dd5548da82928f7e183f0f471332a0ebb73397dfd6305ea",
     "rtl/pixel_read_cache.sv": "4b714aff08cf402bf1f96454af01405d3c48ae9f870ca54ce6dd3411abc09983",
-    "rtl/remap_ddr_read_top.sv": "69cad8217f610be8079acc183ea88be000bffac0796ab6d5f450a022e5a2e1b8",
-    "rtl/remap_frame_core.sv": "7b2a92e4ecf9154da3941baab844a2a751fa0e6236c11cfabd650d4b92b4d606",
-    "scripts/check_synthesis.py": "d8d424417687d26b9afd7f30eabde0524eb34bdfb5ac3c98573e79f44e78dae5",
+    "rtl/projective_distortion_mapper.sv": "6fcada7f315253b7e8dbcb6848414ab91739de36a788e73ee3e4b3d17958ad68",
+    "rtl/remap_ddr_read_top.sv": "000a7c63d70a27b1af67b868f3d7e27ff7ac3cf218e5632fb8396055a4e6b26b",
+    "rtl/remap_frame_core.sv": "4c45febd25bb825dfcb78df66d385acf997a0273c62ad05e66ae4347539d8d99",
+    "scripts/check_synthesis.py": "b969641256b6489e641f33b27a6cd5338b0c7a8b3cd8ba2aedac2d93aee1c5f9",
+    "scripts/generate_gamma.py": "8ae0349e3cc164869cb785e7a06494b858b6127daa6ab6db9958e9e5d5a43135",
+    "scripts/generate_pipeline_vectors.py": "707db26f1217b0005ee9b49e6cb1411b3f477a44d7c7c74f1f6da1bdf59c6936",
+    "scripts/generate_projective_vectors.py": "6587f1d65098ee7c3c1d748e2107eeea50fd7d2f186c2289b6f39c0758338d0d",
     "scripts/generate_regression.py": "6147dd80fdc1530c869d9bd500afee134db093846d5f5b2df734cdcfa698b755",
     "scripts/prepare_vendor.py": "632782667e5b48b15d8cd0cda6e8563e6b84e8565df63b58628b38364d268ee7",
-    "scripts/run_hdl.py": "872aae40246e2587461f9c522e640bf9f2bf1bb6af4fda762adde29ffeccd1fb",
-    "scripts/verify.py": "73fe0703a52c6a36fcf50ac2ef563d142404fbbdd7db68d208828358bb99eec4",
-    "sim/tb_frame.sv": "0759b76d5b596d68f97737284c1e0853339b9f11426565842693069802f9d8de",
+    "scripts/run_hdl.py": "520a3867cec3c5168ee9aaef8ff420fd260dac4c24aaee7c5aed08a5d7dfc9b4",
+    "scripts/verify.py": "9f9cb5314d55e5067c0f81efe375578dd07a04164c2db146a85bb18aba1ba00e",
+    "sim/tb_algorithm_pipeline.sv": "3c7ff689e13af69dde1f6cf08fe12522f1422029e80ea9b798cda5912cb75207",
+    "sim/tb_frame.sv": "f0aae14aaa72a0f5c53c2e6745a4e534b232c78b990d1be7b681c51301063e5e",
+    "sim/tb_gamma.sv": "8c5baf3e0325da439ddcc7f9597f5bd973b67b600597416c0264f109776305a4",
     "sim/tb_math.sv": "0f18f133d6996a025dda023f98890081ed0de5a3d14c3a6883b5864a699cdb84",
     "sim/tb_pango_read_bridge.sv": "7697a2fc9a9b2d5f93ba870aa06f0a04d000bf08f61f9f2e4c3449394517eeeb",
     "sim/tb_pixel_read_cache.sv": "d344c5a71b39457065fb0139c37063147e3142c94d07542422d817789e23b67c",
+    "sim/tb_projective.sv": "dbb3d4ee1fec8a2a99c7267caeb26b71df82c9e0b5453ae01ae38ee77e094666",
     "sim/tb_vectors.sv": "b00c9169afae27a8fa42b486e1da92e9ff9fe808992bd7e708fdf7c90724600a",
     "software/__init__.py": "d6e8c9b9d0da49e3091c382321a122f055996420a8de1875bae0a148b20bd132",
     "software/cache_budget.py": "8a5ce81cbd10b339e89442f8c46b5e27810917f59f7ff27efbff225f55ca2857",
     "software/calibrate.py": "905d6916f02fb20b381e54c68bc10d33563688003cd148a7f81c4351d70fcf13",
-    "software/cli.py": "8e6280f60308c61f0684078246d51e2332b111d608ed1fbaafcf4f8574edd872",
-    "software/reference.py": "755878d2856ffa205406f9294264e3f47003e9b164e0311c1a1f39c8cb337bff",
+    "software/cli.py": "24c0e83912bef54df7c7f6a0d0aa88ec9606f40dd97e6cbb298597583ddd5f7b",
+    "software/enhancement.py": "c12a90ab3a0f6727865ce375623726554e8067e8fd8bfab06e76e41e918a5534",
+    "software/geometry.py": "d6516aa1c874e815d7831ad5900d5efd62e20d7adbfe286aeec9df06fc04c52a",
+    "software/pipeline.py": "97f34de30f1b8849f7d55e08fc2b6999a049b17d19b24eb3f520cc1535db88fd",
+    "software/quality.py": "fd6df889dae774c16e579c22b22baa35836b3b2c7f349d7106887f6d3babcf85",
+    "software/reference.py": "418bbf2ebd33edcfdd0a20826c3cd8c3ae9e12429a3efb7f85333508e36fb100",
     "software/roundtrip.py": "204d52ba6a77d87ecbd3072cb035fb07868d9a5b25f78cdbfe23e9c9caea68c3",
+    "tests/test_enhancement.py": "b85aa49ffec0104bd2bdd90e6d73329a5b70dd04ca28a476bbf438461a3fa10a",
+    "tests/test_geometry.py": "6322aaff4e6a9c0267994c8121573ac9868f62b6e2c8a2b894f00ce6c704ceeb",
+    "tests/test_pipeline.py": "c5807cf32fcfbee83dc4d7da02800783f7f2b366f180ac09361e23840b34605b",
+    "tests/test_quality.py": "9d88546c0772f89d0ae5a99039df99954d4572c7325788dfbe4d73a44a2a8798",
     "tests/test_reference.py": "40bcf99df7b99e4bfb9313ebccbbbb88105762e12ed1b86b59f271aecacbf10d"
   },
   "hdl": {
@@ -39,33 +58,1489 @@
       {
         "test": "tb_math",
         "passed": true,
-        "seconds": 9.672
+        "seconds": 4.437
       },
       {
         "test": "tb_vectors",
         "passed": true,
-        "seconds": 1.031
+        "seconds": 1.125
       },
       {
         "test": "tb_frame",
         "passed": true,
-        "seconds": 6.406
+        "seconds": 7.063
       },
       {
         "test": "tb_pixel_read_cache",
         "passed": true,
-        "seconds": 0.453
+        "seconds": 0.484
       },
       {
         "test": "tb_pango_read_bridge",
         "passed": true,
-        "seconds": 0.485
+        "seconds": 0.484
       },
       {
         "test": "tb_frame_cached",
         "passed": true,
-        "seconds": 4.219
+        "seconds": 4.625
+      },
+      {
+        "test": "tb_gamma",
+        "passed": true,
+        "seconds": 0.563
+      },
+      {
+        "test": "tb_projective",
+        "passed": true,
+        "seconds": 24.922
+      },
+      {
+        "test": "tb_frame_projective",
+        "passed": true,
+        "seconds": 30.422
+      },
+      {
+        "test": "tb_frame_projective_cached",
+        "passed": true,
+        "seconds": 30.328
+      },
+      {
+        "test": "tb_algorithm_pipeline",
+        "passed": true,
+        "seconds": 20.281
       }
     ]
-  }
+  },
+  "generic_synthesis": {
+    "kind": "Generic RTL structural synthesis; no Pango mapping, timing, or board validation",
+    "tool": "Yosys 0.9 (git sha1 1979e0b)",
+    "utc_time": "2026-10-22T14:50:16.460838+00:00",
+    "sources_sha256": {
+      "rtl/distortion_mapper.sv": "74ab900074bc9abfcc3db499215e44ebfcbfac15f542a65416b4850f2762e424",
+      "rtl/bilinear_rgb.sv": "0a1d4e17f1238ccd8e520c9229cdf3679bee99515c527d91a0f72c69312d9053",
+      "rtl/remap_frame_core.sv": "4c45febd25bb825dfcb78df66d385acf997a0273c62ad05e66ae4347539d8d99",
+      "rtl/pixel_read_cache.sv": "4b714aff08cf402bf1f96454af01405d3c48ae9f870ca54ce6dd3411abc09983",
+      "rtl/pango_read_bridge.sv": "e5fa4fe26b0446a94dd5548da82928f7e183f0f471332a0ebb73397dfd6305ea",
+      "rtl/remap_ddr_read_top.sv": "000a7c63d70a27b1af67b868f3d7e27ff7ac3cf218e5632fb8396055a4e6b26b",
+      "rtl/homography_normalizer.sv": "70aaad160fdb53d7d4fb39cc88411030f592b474209bcd3e5590b244d4d424b9",
+      "rtl/projective_distortion_mapper.sv": "6fcada7f315253b7e8dbcb6848414ab91739de36a788e73ee3e4b3d17958ad68",
+      "rtl/gamma_stream.sv": "4d3d0aaab960b1c856caf52d709f0881bb7cdf5afeec7fffba33891a89876fc8"
+    },
+    "modules": [
+      {
+        "top": "distortion_mapper",
+        "configuration": "distortion_mapper",
+        "parameters": {},
+        "passed": true,
+        "check_problems": 0,
+        "generic_cells": 293,
+        "generic_cell_types": {
+          "$add": 15,
+          "$dff": 83,
+          "$logic_and": 3,
+          "$logic_not": 1,
+          "$logic_or": 31,
+          "$mul": 18,
+          "$mux": 111,
+          "$ne": 31
+        },
+        "flip_flop_bits": 2717,
+        "latch_bits": 0,
+        "memory_bits": 0,
+        "memory_blocks": [],
+        "multiplication_cells": 18,
+        "multiplier_widths": {
+          "32s x 17s -> 49": 4,
+          "32s x 32s -> 64": 14
+        },
+        "warnings": [
+          "Warning: Replacing memory \\v_pipe with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv:168",
+          "Warning: Replacing memory \\u_pipe with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv:167",
+          "Warning: Replacing memory \\s1_p11 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:70",
+          "Warning: Replacing memory \\s1_p01 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:69",
+          "Warning: Replacing memory \\s1_p10 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:68",
+          "Warning: Replacing memory \\s1_p00 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:67",
+          "Warning: Replacing memory \\cfg with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/remap_frame_core.sv:92",
+          "Warning: Found one of those horrible `(synopsys|synthesis) translate_off' comments."
+        ],
+        "log": "build/synthesis_distortion_mapper.log",
+        "netlist": "build/synthesis_distortion_mapper.json",
+        "flow": [
+          "read_verilog -sv \"/mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/remap_frame_core.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/pixel_read_cache.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/pango_read_bridge.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/remap_ddr_read_top.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/homography_normalizer.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/projective_distortion_mapper.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/gamma_stream.sv\"",
+          "hierarchy -check -top distortion_mapper",
+          "proc",
+          "opt",
+          "wreduce",
+          "opt",
+          "memory_dff",
+          "memory_collect",
+          "opt_clean",
+          "check -assert",
+          "stat",
+          "write_json \"/mnt/e/code/fpga/distortion_fpga/build/synthesis_distortion_mapper.json\""
+        ]
+      },
+      {
+        "top": "bilinear_rgb",
+        "configuration": "bilinear_rgb",
+        "parameters": {},
+        "passed": true,
+        "check_problems": 0,
+        "generic_cells": 78,
+        "generic_cell_types": {
+          "$add": 12,
+          "$dff": 22,
+          "$mul": 16,
+          "$mux": 26,
+          "$sub": 2
+        },
+        "flip_flop_bits": 491,
+        "latch_bits": 0,
+        "memory_bits": 0,
+        "memory_blocks": [],
+        "multiplication_cells": 16,
+        "multiplier_widths": {
+          "8u x 17u -> 25": 12,
+          "8u x 8u -> 16": 1,
+          "8u x 9u -> 17": 1,
+          "9u x 8u -> 17": 1,
+          "9u x 9u -> 17": 1
+        },
+        "warnings": [
+          "Warning: Replacing memory \\v_pipe with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv:168",
+          "Warning: Replacing memory \\u_pipe with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv:167",
+          "Warning: Replacing memory \\s1_p11 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:70",
+          "Warning: Replacing memory \\s1_p01 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:69",
+          "Warning: Replacing memory \\s1_p10 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:68",
+          "Warning: Replacing memory \\s1_p00 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:67",
+          "Warning: Replacing memory \\cfg with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/remap_frame_core.sv:92",
+          "Warning: Found one of those horrible `(synopsys|synthesis) translate_off' comments."
+        ],
+        "log": "build/synthesis_bilinear_rgb.log",
+        "netlist": "build/synthesis_bilinear_rgb.json",
+        "flow": [
+          "read_verilog -sv \"/mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/remap_frame_core.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/pixel_read_cache.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/pango_read_bridge.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/remap_ddr_read_top.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/homography_normalizer.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/projective_distortion_mapper.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/gamma_stream.sv\"",
+          "hierarchy -check -top bilinear_rgb",
+          "proc",
+          "opt",
+          "wreduce",
+          "opt",
+          "memory_dff",
+          "memory_collect",
+          "opt_clean",
+          "check -assert",
+          "stat",
+          "write_json \"/mnt/e/code/fpga/distortion_fpga/build/synthesis_bilinear_rgb.json\""
+        ]
+      },
+      {
+        "top": "remap_frame_core",
+        "configuration": "remap_frame_core",
+        "parameters": {},
+        "passed": true,
+        "check_problems": 0,
+        "generic_cells": 589,
+        "generic_cell_types": {
+          "$add": 35,
+          "$dff": 136,
+          "$eq": 10,
+          "$ge": 2,
+          "$logic_and": 16,
+          "$logic_not": 4,
+          "$logic_or": 32,
+          "$lt": 2,
+          "$mem": 1,
+          "$mul": 34,
+          "$mux": 282,
+          "$ne": 31,
+          "$pmux": 2,
+          "$sub": 2
+        },
+        "flip_flop_bits": 3913,
+        "latch_bits": 0,
+        "memory_bits": 96,
+        "memory_blocks": [
+          {
+            "module": "remap_frame_core",
+            "cell": "taps",
+            "width": 24,
+            "size": 4,
+            "read_ports": 4,
+            "read_clock_enable_mask": 0,
+            "write_ports": 10,
+            "write_clock_enable_mask": 1023
+          }
+        ],
+        "multiplication_cells": 34,
+        "multiplier_widths": {
+          "32s x 17s -> 49": 4,
+          "32s x 32s -> 64": 14,
+          "8u x 17u -> 25": 12,
+          "8u x 8u -> 16": 1,
+          "8u x 9u -> 17": 1,
+          "9u x 8u -> 17": 1,
+          "9u x 9u -> 17": 1
+        },
+        "warnings": [
+          "Warning: Replacing memory \\v_pipe with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv:168",
+          "Warning: Replacing memory \\u_pipe with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv:167",
+          "Warning: Replacing memory \\s1_p11 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:70",
+          "Warning: Replacing memory \\s1_p01 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:69",
+          "Warning: Replacing memory \\s1_p10 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:68",
+          "Warning: Replacing memory \\s1_p00 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:67",
+          "Warning: Replacing memory \\cfg with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/remap_frame_core.sv:92",
+          "Warning: Found one of those horrible `(synopsys|synthesis) translate_off' comments."
+        ],
+        "log": "build/synthesis_remap_frame_core.log",
+        "netlist": "build/synthesis_remap_frame_core.json",
+        "flow": [
+          "read_verilog -sv \"/mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/remap_frame_core.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/pixel_read_cache.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/pango_read_bridge.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/remap_ddr_read_top.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/homography_normalizer.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/projective_distortion_mapper.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/gamma_stream.sv\"",
+          "hierarchy -check -top remap_frame_core",
+          "proc",
+          "opt",
+          "wreduce",
+          "opt",
+          "memory_dff",
+          "memory_collect",
+          "opt_clean",
+          "check -assert",
+          "stat",
+          "write_json \"/mnt/e/code/fpga/distortion_fpga/build/synthesis_remap_frame_core.json\""
+        ]
+      },
+      {
+        "top": "pixel_read_cache",
+        "configuration": "pixel_read_cache",
+        "parameters": {},
+        "passed": true,
+        "check_problems": 0,
+        "generic_cells": 3691,
+        "generic_cell_types": {
+          "$add": 2,
+          "$and": 1,
+          "$dff": 11,
+          "$eq": 516,
+          "$logic_and": 6,
+          "$logic_not": 10,
+          "$mem": 2,
+          "$mux": 2621,
+          "$pmux": 515,
+          "$reduce_and": 2,
+          "$reduce_bool": 2,
+          "$shiftx": 3
+        },
+        "flip_flop_bits": 677,
+        "latch_bits": 0,
+        "memory_bits": 140288,
+        "memory_blocks": [
+          {
+            "module": "pixel_read_cache",
+            "cell": "data_mem",
+            "width": 256,
+            "size": 512,
+            "read_ports": 1,
+            "read_clock_enable_mask": 1,
+            "write_ports": 1,
+            "write_clock_enable_mask": 1
+          },
+          {
+            "module": "pixel_read_cache",
+            "cell": "tag_mem",
+            "width": 18,
+            "size": 512,
+            "read_ports": 1,
+            "read_clock_enable_mask": 1,
+            "write_ports": 1,
+            "write_clock_enable_mask": 1
+          }
+        ],
+        "multiplication_cells": 0,
+        "multiplier_widths": {},
+        "warnings": [
+          "Warning: Replacing memory \\v_pipe with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv:168",
+          "Warning: Replacing memory \\u_pipe with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv:167",
+          "Warning: Replacing memory \\s1_p11 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:70",
+          "Warning: Replacing memory \\s1_p01 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:69",
+          "Warning: Replacing memory \\s1_p10 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:68",
+          "Warning: Replacing memory \\s1_p00 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:67",
+          "Warning: Replacing memory \\cfg with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/remap_frame_core.sv:92",
+          "Warning: Found one of those horrible `(synopsys|synthesis) translate_off' comments."
+        ],
+        "log": "build/synthesis_pixel_read_cache.log",
+        "netlist": "build/synthesis_pixel_read_cache.json",
+        "flow": [
+          "read_verilog -sv \"/mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/remap_frame_core.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/pixel_read_cache.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/pango_read_bridge.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/remap_ddr_read_top.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/homography_normalizer.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/projective_distortion_mapper.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/gamma_stream.sv\"",
+          "hierarchy -check -top pixel_read_cache",
+          "proc",
+          "opt",
+          "wreduce",
+          "opt",
+          "memory_dff",
+          "memory_collect",
+          "opt_clean",
+          "check -assert",
+          "stat",
+          "write_json \"/mnt/e/code/fpga/distortion_fpga/build/synthesis_pixel_read_cache.json\""
+        ]
+      },
+      {
+        "top": "pango_read_bridge",
+        "configuration": "pango_read_bridge",
+        "parameters": {},
+        "passed": true,
+        "check_problems": 0,
+        "generic_cells": 48,
+        "generic_cell_types": {
+          "$dff": 5,
+          "$eq": 3,
+          "$logic_and": 5,
+          "$logic_not": 3,
+          "$logic_or": 4,
+          "$mux": 22,
+          "$pmux": 3,
+          "$reduce_bool": 1,
+          "$reduce_or": 2
+        },
+        "flip_flop_bits": 290,
+        "latch_bits": 0,
+        "memory_bits": 0,
+        "memory_blocks": [],
+        "multiplication_cells": 0,
+        "multiplier_widths": {},
+        "warnings": [
+          "Warning: Replacing memory \\v_pipe with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv:168",
+          "Warning: Replacing memory \\u_pipe with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv:167",
+          "Warning: Replacing memory \\s1_p11 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:70",
+          "Warning: Replacing memory \\s1_p01 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:69",
+          "Warning: Replacing memory \\s1_p10 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:68",
+          "Warning: Replacing memory \\s1_p00 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:67",
+          "Warning: Replacing memory \\cfg with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/remap_frame_core.sv:92",
+          "Warning: Found one of those horrible `(synopsys|synthesis) translate_off' comments."
+        ],
+        "log": "build/synthesis_pango_read_bridge.log",
+        "netlist": "build/synthesis_pango_read_bridge.json",
+        "flow": [
+          "read_verilog -sv \"/mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/remap_frame_core.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/pixel_read_cache.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/pango_read_bridge.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/remap_ddr_read_top.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/homography_normalizer.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/projective_distortion_mapper.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/gamma_stream.sv\"",
+          "hierarchy -check -top pango_read_bridge",
+          "proc",
+          "opt",
+          "wreduce",
+          "opt",
+          "memory_dff",
+          "memory_collect",
+          "opt_clean",
+          "check -assert",
+          "stat",
+          "write_json \"/mnt/e/code/fpga/distortion_fpga/build/synthesis_pango_read_bridge.json\""
+        ]
+      },
+      {
+        "top": "remap_ddr_read_top",
+        "configuration": "remap_ddr_read_top",
+        "parameters": {},
+        "passed": true,
+        "check_problems": 0,
+        "generic_cells": 4338,
+        "generic_cell_types": {
+          "$add": 37,
+          "$and": 1,
+          "$dff": 153,
+          "$eq": 529,
+          "$ge": 2,
+          "$logic_and": 31,
+          "$logic_not": 18,
+          "$logic_or": 37,
+          "$lt": 2,
+          "$mem": 3,
+          "$mul": 34,
+          "$mux": 2927,
+          "$ne": 31,
+          "$pmux": 520,
+          "$reduce_and": 2,
+          "$reduce_bool": 3,
+          "$reduce_or": 3,
+          "$shiftx": 3,
+          "$sub": 2
+        },
+        "flip_flop_bits": 4881,
+        "latch_bits": 0,
+        "memory_bits": 140384,
+        "memory_blocks": [
+          {
+            "module": "$paramod\\pixel_read_cache\\LINES=512",
+            "cell": "data_mem",
+            "width": 256,
+            "size": 512,
+            "read_ports": 1,
+            "read_clock_enable_mask": 1,
+            "write_ports": 1,
+            "write_clock_enable_mask": 1
+          },
+          {
+            "module": "$paramod\\pixel_read_cache\\LINES=512",
+            "cell": "tag_mem",
+            "width": 18,
+            "size": 512,
+            "read_ports": 1,
+            "read_clock_enable_mask": 1,
+            "write_ports": 1,
+            "write_clock_enable_mask": 1
+          },
+          {
+            "module": "$paramod\\remap_frame_core\\WIDTH=64\\HEIGHT=48\\PROJECTIVE=0\\POSITIVE_DEPTH=0",
+            "cell": "taps",
+            "width": 24,
+            "size": 4,
+            "read_ports": 4,
+            "read_clock_enable_mask": 0,
+            "write_ports": 10,
+            "write_clock_enable_mask": 1023
+          }
+        ],
+        "multiplication_cells": 34,
+        "multiplier_widths": {
+          "32s x 17s -> 49": 4,
+          "32s x 32s -> 64": 14,
+          "8u x 17u -> 25": 12,
+          "8u x 8u -> 16": 1,
+          "8u x 9u -> 17": 1,
+          "9u x 8u -> 17": 1,
+          "9u x 9u -> 17": 1
+        },
+        "warnings": [
+          "Warning: Replacing memory \\v_pipe with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv:168",
+          "Warning: Replacing memory \\u_pipe with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv:167",
+          "Warning: Replacing memory \\s1_p11 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:70",
+          "Warning: Replacing memory \\s1_p01 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:69",
+          "Warning: Replacing memory \\s1_p10 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:68",
+          "Warning: Replacing memory \\s1_p00 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:67",
+          "Warning: Replacing memory \\cfg with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/remap_frame_core.sv:92",
+          "Warning: Found one of those horrible `(synopsys|synthesis) translate_off' comments.",
+          "Warning: Replacing memory \\cfg with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/remap_frame_core.sv:92"
+        ],
+        "log": "build/synthesis_remap_ddr_read_top.log",
+        "netlist": "build/synthesis_remap_ddr_read_top.json",
+        "flow": [
+          "read_verilog -sv \"/mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/remap_frame_core.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/pixel_read_cache.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/pango_read_bridge.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/remap_ddr_read_top.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/homography_normalizer.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/projective_distortion_mapper.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/gamma_stream.sv\"",
+          "hierarchy -check -top remap_ddr_read_top",
+          "proc",
+          "opt",
+          "wreduce",
+          "opt",
+          "memory_dff",
+          "memory_collect",
+          "opt_clean",
+          "check -assert",
+          "stat",
+          "write_json \"/mnt/e/code/fpga/distortion_fpga/build/synthesis_remap_ddr_read_top.json\""
+        ]
+      },
+      {
+        "top": "homography_normalizer",
+        "configuration": "homography_normalizer",
+        "parameters": {},
+        "passed": true,
+        "check_problems": 0,
+        "generic_cells": 168,
+        "generic_cell_types": {
+          "$add": 6,
+          "$dff": 22,
+          "$eq": 4,
+          "$ge": 2,
+          "$logic_and": 2,
+          "$logic_not": 2,
+          "$logic_or": 5,
+          "$lt": 1,
+          "$mul": 6,
+          "$mux": 92,
+          "$ne": 5,
+          "$neg": 5,
+          "$pmux": 11,
+          "$sub": 3,
+          "$xor": 2
+        },
+        "flip_flop_bits": 723,
+        "latch_bits": 0,
+        "memory_bits": 0,
+        "memory_blocks": [],
+        "multiplication_cells": 6,
+        "multiplier_widths": {
+          "32s x 17s -> 49": 6
+        },
+        "warnings": [
+          "Warning: Replacing memory \\v_pipe with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv:168",
+          "Warning: Replacing memory \\u_pipe with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv:167",
+          "Warning: Replacing memory \\s1_p11 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:70",
+          "Warning: Replacing memory \\s1_p01 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:69",
+          "Warning: Replacing memory \\s1_p10 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:68",
+          "Warning: Replacing memory \\s1_p00 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:67",
+          "Warning: Replacing memory \\cfg with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/remap_frame_core.sv:92",
+          "Warning: Found one of those horrible `(synopsys|synthesis) translate_off' comments."
+        ],
+        "log": "build/synthesis_homography_normalizer.log",
+        "netlist": "build/synthesis_homography_normalizer.json",
+        "flow": [
+          "read_verilog -sv \"/mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/remap_frame_core.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/pixel_read_cache.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/pango_read_bridge.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/remap_ddr_read_top.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/homography_normalizer.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/projective_distortion_mapper.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/gamma_stream.sv\"",
+          "hierarchy -check -top homography_normalizer",
+          "proc",
+          "opt",
+          "wreduce",
+          "opt",
+          "memory_dff",
+          "memory_collect",
+          "opt_clean",
+          "check -assert",
+          "stat",
+          "write_json \"/mnt/e/code/fpga/distortion_fpga/build/synthesis_homography_normalizer.json\""
+        ]
+      },
+      {
+        "top": "projective_distortion_mapper",
+        "configuration": "projective_distortion_mapper",
+        "parameters": {},
+        "passed": true,
+        "check_problems": 0,
+        "generic_cells": 445,
+        "generic_cell_types": {
+          "$add": 17,
+          "$dff": 103,
+          "$eq": 4,
+          "$ge": 2,
+          "$logic_and": 5,
+          "$logic_not": 3,
+          "$logic_or": 34,
+          "$lt": 1,
+          "$mul": 20,
+          "$mux": 201,
+          "$ne": 34,
+          "$neg": 5,
+          "$pmux": 11,
+          "$sub": 3,
+          "$xor": 2
+        },
+        "flip_flop_bits": 3308,
+        "latch_bits": 0,
+        "memory_bits": 0,
+        "memory_blocks": [],
+        "multiplication_cells": 20,
+        "multiplier_widths": {
+          "32s x 17s -> 49": 6,
+          "32s x 32s -> 64": 14
+        },
+        "warnings": [
+          "Warning: Replacing memory \\v_pipe with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv:168",
+          "Warning: Replacing memory \\u_pipe with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv:167",
+          "Warning: Replacing memory \\s1_p11 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:70",
+          "Warning: Replacing memory \\s1_p01 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:69",
+          "Warning: Replacing memory \\s1_p10 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:68",
+          "Warning: Replacing memory \\s1_p00 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:67",
+          "Warning: Replacing memory \\cfg with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/remap_frame_core.sv:92",
+          "Warning: Found one of those horrible `(synopsys|synthesis) translate_off' comments.",
+          "Warning: Replacing memory \\v_pipe with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv:168",
+          "Warning: Replacing memory \\u_pipe with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv:167"
+        ],
+        "log": "build/synthesis_projective_distortion_mapper.log",
+        "netlist": "build/synthesis_projective_distortion_mapper.json",
+        "flow": [
+          "read_verilog -sv \"/mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/remap_frame_core.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/pixel_read_cache.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/pango_read_bridge.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/remap_ddr_read_top.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/homography_normalizer.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/projective_distortion_mapper.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/gamma_stream.sv\"",
+          "hierarchy -check -top projective_distortion_mapper",
+          "proc",
+          "opt",
+          "wreduce",
+          "opt",
+          "memory_dff",
+          "memory_collect",
+          "opt_clean",
+          "check -assert",
+          "stat",
+          "write_json \"/mnt/e/code/fpga/distortion_fpga/build/synthesis_projective_distortion_mapper.json\""
+        ]
+      },
+      {
+        "top": "gamma_stream",
+        "configuration": "gamma_stream",
+        "parameters": {},
+        "passed": true,
+        "check_problems": 0,
+        "generic_cells": 145,
+        "generic_cell_types": {
+          "$add": 20,
+          "$dff": 14,
+          "$eq": 13,
+          "$ge": 7,
+          "$gt": 2,
+          "$logic_and": 3,
+          "$logic_not": 3,
+          "$logic_or": 4,
+          "$lt": 2,
+          "$mem": 1,
+          "$mux": 69,
+          "$ne": 2,
+          "$pmux": 2,
+          "$sub": 3
+        },
+        "flip_flop_bits": 186,
+        "latch_bits": 0,
+        "memory_bits": 14336,
+        "memory_blocks": [
+          {
+            "module": "gamma_stream",
+            "cell": "lut",
+            "width": 8,
+            "size": 1792,
+            "read_ports": 3,
+            "read_clock_enable_mask": 0,
+            "write_ports": 0,
+            "write_clock_enable_mask": 0
+          }
+        ],
+        "multiplication_cells": 0,
+        "multiplier_widths": {},
+        "warnings": [
+          "Warning: Replacing memory \\v_pipe with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv:168",
+          "Warning: Replacing memory \\u_pipe with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv:167",
+          "Warning: Replacing memory \\s1_p11 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:70",
+          "Warning: Replacing memory \\s1_p01 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:69",
+          "Warning: Replacing memory \\s1_p10 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:68",
+          "Warning: Replacing memory \\s1_p00 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:67",
+          "Warning: Replacing memory \\cfg with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/remap_frame_core.sv:92",
+          "Warning: Found one of those horrible `(synopsys|synthesis) translate_off' comments."
+        ],
+        "log": "build/synthesis_gamma_stream.log",
+        "netlist": "build/synthesis_gamma_stream.json",
+        "flow": [
+          "read_verilog -sv \"/mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/remap_frame_core.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/pixel_read_cache.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/pango_read_bridge.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/remap_ddr_read_top.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/homography_normalizer.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/projective_distortion_mapper.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/gamma_stream.sv\"",
+          "hierarchy -check -top gamma_stream",
+          "proc",
+          "opt",
+          "wreduce",
+          "opt",
+          "memory_dff",
+          "memory_collect",
+          "opt_clean",
+          "check -assert",
+          "stat",
+          "write_json \"/mnt/e/code/fpga/distortion_fpga/build/synthesis_gamma_stream.json\""
+        ]
+      },
+      {
+        "top": "remap_ddr_read_top",
+        "configuration": "remap_ddr_read_top_projective",
+        "parameters": {
+          "PROJECTIVE": 1,
+          "POSITIVE_DEPTH": 1
+        },
+        "passed": true,
+        "check_problems": 0,
+        "generic_cells": 4499,
+        "generic_cell_types": {
+          "$add": 39,
+          "$and": 1,
+          "$dff": 176,
+          "$eq": 533,
+          "$ge": 4,
+          "$logic_and": 33,
+          "$logic_not": 20,
+          "$logic_or": 40,
+          "$lt": 3,
+          "$mem": 3,
+          "$mul": 36,
+          "$mux": 3023,
+          "$ne": 34,
+          "$neg": 5,
+          "$pmux": 531,
+          "$reduce_and": 2,
+          "$reduce_bool": 3,
+          "$reduce_or": 3,
+          "$shiftx": 3,
+          "$sub": 5,
+          "$xor": 2
+        },
+        "flip_flop_bits": 5568,
+        "latch_bits": 0,
+        "memory_bits": 140384,
+        "memory_blocks": [
+          {
+            "module": "$paramod\\pixel_read_cache\\LINES=512",
+            "cell": "data_mem",
+            "width": 256,
+            "size": 512,
+            "read_ports": 1,
+            "read_clock_enable_mask": 1,
+            "write_ports": 1,
+            "write_clock_enable_mask": 1
+          },
+          {
+            "module": "$paramod\\pixel_read_cache\\LINES=512",
+            "cell": "tag_mem",
+            "width": 18,
+            "size": 512,
+            "read_ports": 1,
+            "read_clock_enable_mask": 1,
+            "write_ports": 1,
+            "write_clock_enable_mask": 1
+          },
+          {
+            "module": "$paramod\\remap_frame_core\\WIDTH=64\\HEIGHT=48\\PROJECTIVE=1\\POSITIVE_DEPTH=1",
+            "cell": "taps",
+            "width": 24,
+            "size": 4,
+            "read_ports": 4,
+            "read_clock_enable_mask": 0,
+            "write_ports": 10,
+            "write_clock_enable_mask": 1023
+          }
+        ],
+        "multiplication_cells": 36,
+        "multiplier_widths": {
+          "32s x 17s -> 49": 6,
+          "32s x 32s -> 64": 14,
+          "8u x 17u -> 25": 12,
+          "8u x 8u -> 16": 1,
+          "8u x 9u -> 17": 1,
+          "9u x 8u -> 17": 1,
+          "9u x 9u -> 17": 1
+        },
+        "warnings": [
+          "Warning: Replacing memory \\v_pipe with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv:168",
+          "Warning: Replacing memory \\u_pipe with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv:167",
+          "Warning: Replacing memory \\s1_p11 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:70",
+          "Warning: Replacing memory \\s1_p01 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:69",
+          "Warning: Replacing memory \\s1_p10 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:68",
+          "Warning: Replacing memory \\s1_p00 with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv:67",
+          "Warning: Replacing memory \\cfg with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/remap_frame_core.sv:92",
+          "Warning: Found one of those horrible `(synopsys|synthesis) translate_off' comments.",
+          "Warning: Replacing memory \\cfg with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/remap_frame_core.sv:92",
+          "Warning: Replacing memory \\v_pipe with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv:168",
+          "Warning: Replacing memory \\u_pipe with list of registers. See /mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv:167"
+        ],
+        "log": "build/synthesis_remap_ddr_read_top_projective.log",
+        "netlist": "build/synthesis_remap_ddr_read_top_projective.json",
+        "flow": [
+          "read_verilog -sv \"/mnt/e/code/fpga/distortion_fpga/rtl/distortion_mapper.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/bilinear_rgb.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/remap_frame_core.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/pixel_read_cache.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/pango_read_bridge.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/remap_ddr_read_top.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/homography_normalizer.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/projective_distortion_mapper.sv\" \"/mnt/e/code/fpga/distortion_fpga/rtl/gamma_stream.sv\"",
+          "chparam -set PROJECTIVE 1 -set POSITIVE_DEPTH 1 remap_ddr_read_top",
+          "hierarchy -check -top remap_ddr_read_top",
+          "proc",
+          "opt",
+          "wreduce",
+          "opt",
+          "memory_dff",
+          "memory_collect",
+          "opt_clean",
+          "check -assert",
+          "stat",
+          "write_json \"/mnt/e/code/fpga/distortion_fpga/build/synthesis_remap_ddr_read_top_projective.json\""
+        ]
+      }
+    ]
+  },
+  "projective_numeric": [
+    0.0,
+    3.9454625344603755e-05,
+    3.9454625344603755e-05,
+    3.105496755040349e-05
+  ],
+  "adaptive_sequence": [
+    {
+      "frame": 0,
+      "mode": "adaptive",
+      "config": {
+        "schema_version": 1,
+        "provenance": {
+          "kind": "synthetic",
+          "warning": "TEST ONLY; not camera calibration"
+        },
+        "image_size": [
+          32,
+          24
+        ],
+        "camera_matrix": [
+          [
+            25.6,
+            0,
+            15.5
+          ],
+          [
+            0,
+            25.6,
+            11.5
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "distortion": [
+          -0.18,
+          0.035,
+          0.002,
+          -0.001
+        ],
+        "output_to_ideal": [
+          [
+            1.0663342306561574,
+            0.0,
+            -4.263570415901723
+          ],
+          [
+            0.054745994107781096,
+            1.0,
+            -0.9342821647954054
+          ],
+          [
+            0.004760521226763573,
+            0.0,
+            0.9187580726264866
+          ]
+        ],
+        "projective_positive_depth": true,
+        "pose": {
+          "yaw_degrees": -7,
+          "pitch_degrees": 0,
+          "roll_degrees": 0,
+          "convention": "source_from_output; Rz(roll) Ry(yaw) Rx(pitch); right-handed"
+        }
+      },
+      "used_bank": 3,
+      "gamma": 1.0,
+      "raw_sum": 19798,
+      "raw_count": 768,
+      "raw_mean": 25.778645833333332,
+      "target_bank": 0,
+      "next_bank": 2,
+      "saturated_input_fraction": 0.0
+    },
+    {
+      "frame": 1,
+      "mode": "adaptive",
+      "config": {
+        "schema_version": 1,
+        "provenance": {
+          "kind": "synthetic",
+          "warning": "TEST ONLY; not camera calibration"
+        },
+        "image_size": [
+          32,
+          24
+        ],
+        "camera_matrix": [
+          [
+            25.6,
+            0,
+            15.5
+          ],
+          [
+            0,
+            25.6,
+            11.5
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "distortion": [
+          -0.18,
+          0.035,
+          0.002,
+          -0.001
+        ],
+        "output_to_ideal": [
+          [
+            0.9993908270190959,
+            -0.08753677219784797,
+            0.8792655780516974
+          ],
+          [
+            0.03489949670250097,
+            0.9564358493855235,
+            2.1461123967283573
+          ],
+          [
+            0.0,
+            -0.003404521201080397,
+            1.03534669190417
+          ]
+        ],
+        "projective_positive_depth": true,
+        "pose": {
+          "yaw_degrees": 0,
+          "pitch_degrees": -5,
+          "roll_degrees": 2,
+          "convention": "source_from_output; Rz(roll) Ry(yaw) Rx(pitch); right-handed"
+        }
+      },
+      "used_bank": 2,
+      "gamma": 0.8,
+      "raw_sum": 19798,
+      "raw_count": 768,
+      "raw_mean": 25.778645833333332,
+      "target_bank": 0,
+      "next_bank": 1,
+      "saturated_input_fraction": 0.0
+    },
+    {
+      "frame": 2,
+      "mode": "adaptive",
+      "config": {
+        "schema_version": 1,
+        "provenance": {
+          "kind": "synthetic",
+          "warning": "TEST ONLY; not camera calibration"
+        },
+        "image_size": [
+          32,
+          24
+        ],
+        "camera_matrix": [
+          [
+            25.6,
+            0,
+            15.5
+          ],
+          [
+            0,
+            25.6,
+            11.5
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "distortion": [
+          -0.18,
+          0.035,
+          0.002,
+          -0.001
+        ],
+        "output_to_ideal": [
+          [
+            0.9163402800862835,
+            -0.0697564737441253,
+            5.095645837889991
+          ],
+          [
+            0.014490525459019403,
+            0.9975640502598243,
+            -0.06467888199913041
+          ],
+          [
+            -0.004760521226763573,
+            0.0,
+            1.0663342306561574
+          ]
+        ],
+        "projective_positive_depth": true,
+        "pose": {
+          "yaw_degrees": 7,
+          "pitch_degrees": 0,
+          "roll_degrees": 4,
+          "convention": "source_from_output; Rz(roll) Ry(yaw) Rx(pitch); right-handed"
+        }
+      },
+      "used_bank": 1,
+      "gamma": 0.65,
+      "raw_sum": 19798,
+      "raw_count": 768,
+      "raw_mean": 25.778645833333332,
+      "target_bank": 0,
+      "next_bank": 0,
+      "saturated_input_fraction": 0.0
+    },
+    {
+      "frame": 3,
+      "mode": "adaptive",
+      "config": {
+        "schema_version": 1,
+        "provenance": {
+          "kind": "synthetic",
+          "warning": "TEST ONLY; not camera calibration"
+        },
+        "image_size": [
+          32,
+          24
+        ],
+        "camera_matrix": [
+          [
+            25.6,
+            0,
+            15.5
+          ],
+          [
+            0,
+            25.6,
+            11.5
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "distortion": [
+          -0.18,
+          0.035,
+          0.002,
+          -0.001
+        ],
+        "output_to_ideal": [
+          [
+            1.0608969589856485,
+            -0.1459440125252837,
+            -2.763803798118179
+          ],
+          [
+            0.15849531806107184,
+            0.9529875394136449,
+            -0.15109654298659336
+          ],
+          [
+            0.004760521226763573,
+            -0.0033791444163136395,
+            0.9538412956492222
+          ]
+        ],
+        "projective_positive_depth": true,
+        "pose": {
+          "yaw_degrees": -7,
+          "pitch_degrees": -5,
+          "roll_degrees": 6,
+          "convention": "source_from_output; Rz(roll) Ry(yaw) Rx(pitch); right-handed"
+        }
+      },
+      "used_bank": 0,
+      "gamma": 0.5,
+      "raw_sum": 19798,
+      "raw_count": 768,
+      "raw_mean": 25.778645833333332,
+      "target_bank": 0,
+      "next_bank": 0,
+      "saturated_input_fraction": 0.0
+    },
+    {
+      "frame": 4,
+      "mode": "adaptive",
+      "config": {
+        "schema_version": 1,
+        "provenance": {
+          "kind": "synthetic",
+          "warning": "TEST ONLY; not camera calibration"
+        },
+        "image_size": [
+          32,
+          24
+        ],
+        "camera_matrix": [
+          [
+            25.6,
+            0,
+            15.5
+          ],
+          [
+            0,
+            25.6,
+            11.5
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "distortion": [
+          -0.18,
+          0.035,
+          0.002,
+          -0.001
+        ],
+        "output_to_ideal": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "projective_positive_depth": true,
+        "pose": {
+          "yaw_degrees": 0,
+          "pitch_degrees": 0,
+          "roll_degrees": 0,
+          "convention": "source_from_output; Rz(roll) Ry(yaw) Rx(pitch); right-handed"
+        }
+      },
+      "used_bank": 0,
+      "gamma": 0.5,
+      "raw_sum": 172399,
+      "raw_count": 768,
+      "raw_mean": 224.47786458333334,
+      "target_bank": 6,
+      "next_bank": 1,
+      "saturated_input_fraction": 0.5026041666666666
+    },
+    {
+      "frame": 5,
+      "mode": "adaptive",
+      "config": {
+        "schema_version": 1,
+        "provenance": {
+          "kind": "synthetic",
+          "warning": "TEST ONLY; not camera calibration"
+        },
+        "image_size": [
+          32,
+          24
+        ],
+        "camera_matrix": [
+          [
+            25.6,
+            0,
+            15.5
+          ],
+          [
+            0,
+            25.6,
+            11.5
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "distortion": [
+          -0.18,
+          0.035,
+          0.002,
+          -0.001
+        ],
+        "output_to_ideal": [
+          [
+            0.9181534403286062,
+            -0.09775857477686817,
+            5.246990696944579
+          ],
+          [
+            -0.020106632961494744,
+            0.9563569934574943,
+            3.022688230665617
+          ],
+          [
+            -0.004760521226763573,
+            -0.0033791444163136395,
+            1.101417453678893
+          ]
+        ],
+        "projective_positive_depth": true,
+        "pose": {
+          "yaw_degrees": 7,
+          "pitch_degrees": -5,
+          "roll_degrees": 2,
+          "convention": "source_from_output; Rz(roll) Ry(yaw) Rx(pitch); right-handed"
+        }
+      },
+      "used_bank": 1,
+      "gamma": 0.65,
+      "raw_sum": 172399,
+      "raw_count": 768,
+      "raw_mean": 224.47786458333334,
+      "target_bank": 6,
+      "next_bank": 2,
+      "saturated_input_fraction": 0.5026041666666666
+    },
+    {
+      "frame": 6,
+      "mode": "adaptive",
+      "config": {
+        "schema_version": 1,
+        "provenance": {
+          "kind": "synthetic",
+          "warning": "TEST ONLY; not camera calibration"
+        },
+        "image_size": [
+          32,
+          24
+        ],
+        "camera_matrix": [
+          [
+            25.6,
+            0,
+            15.5
+          ],
+          [
+            0,
+            25.6,
+            11.5
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "distortion": [
+          -0.18,
+          0.035,
+          0.002,
+          -0.001
+        ],
+        "output_to_ideal": [
+          [
+            1.0639164381159545,
+            -0.0697564737441253,
+            -3.416295373028813
+          ],
+          [
+            0.12398251367458159,
+            0.9975640502598243,
+            -2.197064892797238
+          ],
+          [
+            0.004760521226763573,
+            0.0,
+            0.9187580726264866
+          ]
+        ],
+        "projective_positive_depth": true,
+        "pose": {
+          "yaw_degrees": -7,
+          "pitch_degrees": 0,
+          "roll_degrees": 4,
+          "convention": "source_from_output; Rz(roll) Ry(yaw) Rx(pitch); right-handed"
+        }
+      },
+      "used_bank": 2,
+      "gamma": 0.8,
+      "raw_sum": 172399,
+      "raw_count": 768,
+      "raw_mean": 224.47786458333334,
+      "target_bank": 6,
+      "next_bank": 3,
+      "saturated_input_fraction": 0.5026041666666666
+    },
+    {
+      "frame": 7,
+      "mode": "fixed",
+      "config": {
+        "schema_version": 1,
+        "provenance": {
+          "kind": "synthetic",
+          "warning": "TEST ONLY; not camera calibration"
+        },
+        "image_size": [
+          32,
+          24
+        ],
+        "camera_matrix": [
+          [
+            25.6,
+            0,
+            15.5
+          ],
+          [
+            0,
+            25.6,
+            11.5
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "distortion": [
+          -0.18,
+          0.035,
+          0.002,
+          -0.001
+        ],
+        "output_to_ideal": [
+          [
+            0.9945218953682733,
+            -0.1569007795236603,
+            1.597064856864204
+          ],
+          [
+            0.10452846326765347,
+            0.9515854454896029,
+            1.1117795626985547
+          ],
+          [
+            0.0,
+            -0.003404521201080397,
+            1.03534669190417
+          ]
+        ],
+        "projective_positive_depth": true,
+        "pose": {
+          "yaw_degrees": 0,
+          "pitch_degrees": -5,
+          "roll_degrees": 6,
+          "convention": "source_from_output; Rz(roll) Ry(yaw) Rx(pitch); right-handed"
+        }
+      },
+      "used_bank": 5,
+      "gamma": 1.5,
+      "raw_sum": 39592,
+      "raw_count": 768,
+      "raw_mean": 51.552083333333336,
+      "target_bank": 3,
+      "next_bank": 3,
+      "saturated_input_fraction": 0.0
+    },
+    {
+      "frame": 8,
+      "mode": "bypass",
+      "config": {
+        "schema_version": 1,
+        "provenance": {
+          "kind": "synthetic",
+          "warning": "TEST ONLY; not camera calibration"
+        },
+        "image_size": [
+          32,
+          24
+        ],
+        "camera_matrix": [
+          [
+            25.6,
+            0,
+            15.5
+          ],
+          [
+            0,
+            25.6,
+            11.5
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "distortion": [
+          -0.18,
+          0.035,
+          0.002,
+          -0.001
+        ],
+        "output_to_ideal": [
+          [
+            0.9187580726264866,
+            0.0,
+            4.263570415901725
+          ],
+          [
+            -0.054745994107781096,
+            1.0,
+            0.7628436525458095
+          ],
+          [
+            -0.004760521226763573,
+            0.0,
+            1.0663342306561574
+          ]
+        ],
+        "projective_positive_depth": true,
+        "pose": {
+          "yaw_degrees": 7,
+          "pitch_degrees": 0,
+          "roll_degrees": 0,
+          "convention": "source_from_output; Rz(roll) Ry(yaw) Rx(pitch); right-handed"
+        }
+      },
+      "used_bank": 3,
+      "gamma": 1.0,
+      "raw_sum": 19798,
+      "raw_count": 768,
+      "raw_mean": 25.778645833333332,
+      "target_bank": 3,
+      "next_bank": 3,
+      "saturated_input_fraction": 0.0
+    },
+    {
+      "frame": 9,
+      "mode": "adaptive",
+      "config": {
+        "schema_version": 1,
+        "provenance": {
+          "kind": "synthetic",
+          "warning": "TEST ONLY; not camera calibration"
+        },
+        "image_size": [
+          32,
+          24
+        ],
+        "camera_matrix": [
+          [
+            25.6,
+            0,
+            15.5
+          ],
+          [
+            0,
+            25.6,
+            11.5
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "distortion": [
+          -0.18,
+          0.035,
+          0.002,
+          -0.001
+        ],
+        "output_to_ideal": [
+          [
+            1.065729598358277,
+            -0.07652828929105832,
+            -3.4967678373393927
+          ],
+          [
+            0.08938535525406743,
+            0.9570983713631882,
+            1.100102468511162
+          ],
+          [
+            0.004760521226763573,
+            -0.0033791444163136395,
+            0.9538412956492222
+          ]
+        ],
+        "projective_positive_depth": true,
+        "pose": {
+          "yaw_degrees": -7,
+          "pitch_degrees": -5,
+          "roll_degrees": 2,
+          "convention": "source_from_output; Rz(roll) Ry(yaw) Rx(pitch); right-handed"
+        }
+      },
+      "used_bank": 3,
+      "gamma": 1.0,
+      "raw_sum": 19798,
+      "raw_count": 768,
+      "raw_mean": 25.778645833333332,
+      "target_bank": 0,
+      "next_bank": 2,
+      "saturated_input_fraction": 0.0
+    }
+  ]
 }

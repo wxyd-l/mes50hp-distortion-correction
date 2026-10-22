@@ -29,8 +29,13 @@ def validate(config):
     if d.shape != (4,) or not np.isfinite(d).all():
         raise ValueError("distortion must be [k1,k2,p1,p2]; k3 is fixed to zero")
     t = np.asarray(config.get("output_to_ideal", [[1, 0, 0], [0, 1, 0]]), dtype=float)
-    if t.shape != (2, 3) or not np.isfinite(t).all() or abs(np.linalg.det(t[:, :2])) < 1e-12:
-        raise ValueError("output_to_ideal must be an invertible 2x3 inverse affine transform")
+    if t.shape not in ((2, 3), (3, 3)) or not np.isfinite(t).all():
+        raise ValueError("output_to_ideal must be an invertible 2x3 affine or 3x3 projective transform")
+    full = np.vstack([t, [0, 0, 1]]) if t.shape == (2, 3) else t
+    if np.linalg.matrix_rank(full) != 3:
+        raise ValueError("output_to_ideal must be invertible")
+    if type(config.get("projective_positive_depth", False)) is not bool:
+        raise ValueError("projective_positive_depth must be boolean")
     return config
 
 
@@ -38,18 +43,37 @@ def load_config(path):
     return validate(json.loads(Path(path).read_text(encoding="utf-8")))
 
 
-def normalized_affine(config):
+def is_projective(config):
+    return np.asarray(config.get("output_to_ideal", [[1, 0, 0], [0, 1, 0]])).shape == (3, 3)
+
+
+def normalized_homography(config):
     validate(config)
     ko = np.asarray(config.get("output_camera_matrix", config["camera_matrix"]), dtype=float)
-    t = np.vstack([config.get("output_to_ideal", [[1, 0, 0], [0, 1, 0]]), [0, 0, 1]])
-    return (np.linalg.inv(ko) @ t)[:2]
+    t = np.asarray(config.get("output_to_ideal", [[1, 0, 0], [0, 1, 0]]), dtype=float)
+    if t.shape == (2, 3):
+        t = np.vstack([t, [0, 0, 1]])
+    return np.linalg.inv(ko) @ t
+
+
+def normalized_affine(config):
+    return normalized_homography(config)[:2]
+
+
+def check_projective_depth(z, config):
+    if np.any(z == 0) or (np.min(z) < 0 < np.max(z)):
+        raise ValueError("projective denominator reaches or crosses the horizon; adjust pose / output field of view")
+    if config.get("projective_positive_depth", False) and np.any(z <= 0):
+        raise ValueError("pose points behind the source camera (nonpositive depth)")
 
 
 def float_map(config):
-    a = normalized_affine(config)
+    a = normalized_homography(config)
     w, h = config["image_size"]
     u, v = np.meshgrid(np.arange(w, dtype=float), np.arange(h, dtype=float))
-    x, y = (a[i, 0] * u + a[i, 1] * v + a[i, 2] for i in range(2))
+    z = a[2, 0] * u + a[2, 1] * v + a[2, 2]
+    check_projective_depth(z, config)
+    x, y = ((a[i, 0] * u + a[i, 1] * v + a[i, 2])/z for i in range(2))
     k1, k2, p1, p2 = config["distortion"]
     r2 = x*x + y*y
     s = 1 + k1*r2 + k2*r2*r2
@@ -64,7 +88,7 @@ def opencv_map(config):
     validate(config)
     k = np.asarray(config["camera_matrix"], dtype=float)
     ko = np.asarray(config.get("output_camera_matrix", k), dtype=float)
-    t = np.vstack([config.get("output_to_ideal", [[1, 0, 0], [0, 1, 0]]), [0, 0, 1]])
+    t = ko @ normalized_homography(config)
     # initUndistortRectifyMap applies inverse(newK * R). R below therefore
     # yields inverse(newK) * T, exactly the desired normalized inverse map.
     r = np.linalg.inv(ko) @ np.linalg.inv(t) @ ko
@@ -75,7 +99,7 @@ def opencv_map(config):
 def checked32(value, stage):
     value = np.asarray(value, dtype=np.int64)
     if np.any(value < -(1 << 31)) or np.any(value >= (1 << 31)):
-        raise ValueError(f"signed32 overflow at {stage}; reduce field of view / affine extent")
+        raise ValueError(f"signed32 overflow at {stage}; reduce field of view / transform extent")
     return value
 
 
@@ -92,9 +116,13 @@ def fixed_parameters(config):
     d = quantize(config["distortion"], 24, "distortion Q8.24")
     k = np.asarray(config["camera_matrix"])
     intrinsics = quantize([k[0, 0], k[1, 1], k[0, 2], k[1, 2]], 16, "intrinsics Q16.16")
-    return {**{f"a{i}{j}": int(a[i,j]) for i in range(2) for j in range(3)},
+    result = {**{f"a{i}{j}": int(a[i,j]) for i in range(2) for j in range(3)},
             **dict(zip(("k1", "k2", "p1", "p2"), map(int, d))),
             **dict(zip(("fx", "fy", "cx", "cy"), map(int, intrinsics)))}
+    if is_projective(config):
+        bottom = quantize(normalized_homography(config)[2], 28, "homogeneous denominator Q4.28")
+        result.update({f"a2{j}": int(bottom[j]) for j in range(3)})
+    return result
 
 
 def fixed_map(config):
@@ -106,6 +134,15 @@ def fixed_map(config):
     def mul(a, b, label):
         return checked32((a*b) >> 24, label)
     x, y = (checked32((p[f"a{i}0"]*u+p[f"a{i}1"]*v+p[f"a{i}2"]) >> 4, f"xy{i}") for i in range(2))
+    if is_projective(config):
+        z = checked32((p["a20"]*u+p["a21"]*v+p["a22"]) >> 4, "homogeneous denominator")
+        check_projective_depth(z, config)
+        # RTL restoring division truncates toward zero. The numerator shift
+        # fits signed64 because each input has first been checked as signed32.
+        def divide(n):
+            magnitude = (np.abs(n) << 24) // np.abs(z)
+            return checked32(np.where((n < 0) != (z < 0), -magnitude, magnitude), "homogeneous quotient")
+        x, y = divide(x), divide(y)
     x2, y2, xy = mul(x,x,"x2"), mul(y,y,"y2"), mul(x,y,"xy")
     r2 = add(x2,y2,"r2")
     r4 = mul(r2,r2,"r4")
