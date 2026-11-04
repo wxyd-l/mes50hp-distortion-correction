@@ -1,0 +1,103 @@
+// tb_ud_bil_dump.v -- dump RTL output pixels for bit-exact model cross-check
+// Derived from tb_ud_bil.v: ideal-model compare removed, per-pixel dump added.
+// Line format: "<v> <u_abs> <value_hex>"
+`timescale 1ns/1ps
+module tb_ud_bil_dump;
+    localparam integer TW = 160, SW = 192, H = 720, FW = 1280;
+    parameter  integer NT  = 8;
+    parameter  integer K1Q = 0;
+    parameter  integer TOL = 3;
+    localparam integer LAT = 12;
+
+    reg clk = 0, rst_n = 0;
+    always #5 clk = ~clk;
+
+    reg frame_start = 0;
+    wire start_o, frame_done, tile_done;
+    wire [11:0] row_v, tile_x0;
+    wire [3:0]  tile_idx;
+
+    ud_tile_sched #(.TW(TW), .HEIGHT(H), .NT(NT)) sched (
+        .clk(clk), .rst_n(rst_n), .frame_start(frame_start), .tile_done(tile_done),
+        .start(start_o), .row_v(row_v), .tile_x0(tile_x0),
+        .tile_idx(tile_idx), .frame_done(frame_done)
+    );
+
+    wire de_o; wire [15:0] data_o;
+    wire fd_req; wire [11:0] fd_row; wire [11:0] fd_x0;
+    wire fd_ack; wire [31:0] fd_data; wire fd_data_vld;
+    wire ar_valid; wire [27:0] ar_addr; wire [3:0] ar_len;
+    reg  ar_ready = 1; reg [255:0] r_data = 0; reg r_valid = 0; reg r_last = 0;
+
+    ud_ddr_row_rd #(.TW(SW), .FW(FW)) rd (
+        .clk(clk), .rst_n(rst_n), .tile_x0(fd_x0),
+        .fd_req(fd_req), .fd_row(fd_row), .fd_ack(fd_ack),
+        .fd_data(fd_data), .fd_data_vld(fd_data_vld),
+        .ar_valid(ar_valid), .ar_addr(ar_addr), .ar_len(ar_len), .ar_ready(ar_ready),
+        .r_data(r_data), .r_valid(r_valid), .r_last(r_last)
+    );
+
+    function [15:0] src;
+        input integer r, c;
+        begin
+            src = (((r + c) & 31) << 11) | (((r * 3 + c) & 63) << 5) | ((r ^ c) & 31);
+        end
+    endfunction
+
+    reg [27:0] a_addr; reg [3:0] a_len;
+    integer cnt, b, rr, x0i, jj, k2;
+    reg [255:0] beat;
+    always @(posedge clk) begin
+        if (!rst_n) begin r_valid <= 0; r_last <= 0; cnt <= 0; b <= 0; end
+        else begin
+            if (ar_valid && ar_ready) begin
+                a_addr <= ar_addr; a_len <= ar_len; cnt <= LAT; b <= 0; r_valid <= 0;
+            end else if (cnt > 0) begin
+                cnt <= cnt - 1;
+                if (cnt == 1) b <= 0;
+            end else if (b <= a_len) begin
+                rr  = a_addr / (FW/2);
+                x0i = (a_addr % (FW/2)) * 2;
+                for (k2 = 0; k2 < 8; k2 = k2 + 1) begin
+                    jj = b*8 + k2;
+                    beat[k2*32 +: 32] = { src(rr, x0i + 2*jj + 1), src(rr, x0i + 2*jj) };
+                end
+                r_data <= beat; r_valid <= 1'b1; r_last <= (b == a_len); b <= b + 1;
+            end else begin
+                r_valid <= 1'b0; r_last <= 1'b0;
+            end
+        end
+    end
+
+    ud_tile_core_bil #(.TW(TW), .SW(SW), .HEIGHT(H), .RPB(24), .MARGIN(8), .LAG(20), .K1CFG(K1Q)) dut (
+        .clk(clk), .rst_n(rst_n), .start(start_o), .row_v(row_v), .tile_x0(tile_x0),
+        .fd_req(fd_req), .fd_row(fd_row), .fd_x0(fd_x0), .fd_ack(fd_ack),
+        .fd_data(fd_data), .fd_data_vld(fd_data_vld),
+        .de_o(de_o), .data_o(data_o), .row_done(tile_done)
+    );
+
+    integer fd, tot, cc, curv, curx, i, seen_cnt;
+    reg seen [0:8*160*720-1];
+    always @(posedge clk) begin
+        if (start_o) begin curx = tile_x0; curv = row_v; cc = 0; end
+        if (de_o) begin
+            seen[curv*8*160 + curx + cc] = 1'b1;
+            if (K1Q != 0) $fdisplay(fd, "%0d %0d %h", curv, curx + cc, data_o);
+            tot = tot + 1; cc = cc + 1;
+        end
+    end
+
+    initial begin
+        tot = 0; cc = 0; curv = 0; curx = 0; seen_cnt = 0;
+        for (i = 0; i < 8*160*720; i = i + 1) seen[i] = 1'b0;
+        fd = $fopen("rtl_dump.txt", "w");
+        #20 rst_n = 1; @(posedge clk);
+        frame_start = 1; @(posedge clk); frame_start = 0;
+        @(posedge frame_done);
+        #200;
+        for (i = 0; i < 8*160*720; i = i + 1) if (!seen[i]) seen_cnt = seen_cnt + 1;
+        $display("DUMP tiles=%0d K1Q=%0d pixels=%0d holes=%0d", NT, K1Q, tot, seen_cnt);
+        $fclose(fd);
+        $finish;
+    end
+endmodule
